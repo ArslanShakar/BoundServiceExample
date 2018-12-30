@@ -62,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
         bindService(intent, serviceConnection, BIND_AUTO_CREATE);
         Log.d(Constants.TAG, "onStart called");
 
+        //use both bound and started services now this intent is recieved in onStart Command.
+        startService(intent);
+
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(broadcastReceiver, new IntentFilter(Constants.MUSIC_COMPLETED));
     }
 

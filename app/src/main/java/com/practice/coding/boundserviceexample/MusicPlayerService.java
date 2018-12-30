@@ -28,6 +28,9 @@ public class MusicPlayerService extends Service {
                 intent.putExtra(Constants.MESSAGE_KEY, isMusicCompleted);
 
                 LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+
+                //for started service when app close music still run and when it complete service destroy,
+                stopSelf();
             }
         });
     }
@@ -46,7 +49,7 @@ public class MusicPlayerService extends Service {
 
         Log.d(Constants.TAG, "onStartCommand called.");
 
-        return super.onStartCommand(intent, flags, startId);
+        return START_NOT_STICKY;
     }
 
     @Nullable
@@ -59,8 +62,17 @@ public class MusicPlayerService extends Service {
     @Override
     public boolean onUnbind(Intent intent) {
         Log.d(Constants.TAG, "onUnbind called.");
-        return super.onUnbind(intent);
+        return true;
     }
+
+
+    @Override
+    public void onRebind(Intent intent) {
+        super.onRebind(intent);
+        Log.d(Constants.TAG, "onRebind called.");
+
+    }
+
 
     @Override
     public void onDestroy() {
